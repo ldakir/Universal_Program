@@ -1,0 +1,109 @@
+new
+read PD
+{
+store := cons tl PD nil;
+cd := hd tl hd PD;
+st := nil;
+while cd {
+first_elem := hd cd;
+if (hd first_elem = @quote){
+	cd := tl cd;
+	st := cons hd tl first_elem st}
+else { if(hd first_elem =@var){
+	k := hd tl first_elem;
+	count := k;
+	loop := store;
+	while count{
+	count := tl count;
+	loop := tl loop};
+	val := hd loop;
+	st := cons val st;
+	cd := tl cd} else{
+if (hd first_elem = @hd){
+	E := hd tl first_elem;
+	cd := tl cd;
+	cd := cons @doHd cd;
+	cd := cons E cd} else {
+if (hd first_elem = @tl){
+        E := hd tl first_elem;
+	cd := tl cd;
+        cd := cons @doTl cd;
+	cd := cons E cd} else {
+if (hd first_elem = @cons){
+	E := hd tl first_elem;
+	F := hd tl tl first_elem;
+	cd := tl cd;
+	cd := cons @doCons cd;
+	cd := cons E cd; cd := cons F cd} else {
+if (hd first_elem = @:=){
+	k := hd tl first_elem;
+	E := hd tl tl first_elem;
+	cd := tl cd;
+	cd := cons k cd;
+	cd := cons @doAsgn cd;
+	cd := cons E cd} else {
+if (hd first_elem = @while){
+	E := hd tl first_elem;
+	C := hd tl tl first_elem;
+	cd := cons @doWhile cd;
+	cd := cons E cd} else {
+if (hd first_elem = @if){
+	E := hd tl first_elem;
+	C := hd hd tl tl first_elem;
+	CC := hd hd tl tl tl first_elem;
+	cd := tl cd;
+	cd := cons CC cd;
+	cd := cons C cd;
+	cd := cons @doIf cd;
+	cd := cons E cd} else {
+
+if (first_elem = @doHd){
+		T := hd st;
+		T := hd T;
+		st := tl st;
+		st := cons T st;
+		cd := tl cd} else {
+if (first_elem = @doTl){
+		T := hd st;
+		T := tl T;
+		st := tl st;
+		st := cons T st;
+		cd := tl cd} else {
+if (first_elem = @doCons){
+		cd := tl cd;
+		first := hd st;
+		st := tl st;
+		second := hd st;
+		st := tl st;
+		docons := cons first second;
+		st := cons docons st} else{
+if (first_elem = @doAsgn){
+		cd := tl cd;
+		k := hd cd;
+		cd := tl cd;
+ 		val := hd st;
+		st := tl st;
+		input := cons k val;
+		input := cons store input;
+		store := <doasgn> input} else {
+
+if (first_elem = @doWhile){
+		snd_elem := hd tl cd;
+		C := hd tl tl snd_elem;
+		if(hd st = nil){cd := tl tl cd; st := tl st} else {st := tl st; cd := tl cd;
+		C:= <reverse> C; 
+		while C{cd:= cons hd C cd; C := tl C}}} else{
+
+if (first_elem = @doIf){
+		cd := tl cd;
+		if(hd st = nil){ cd := tl cd} else {C:= hd cd; cd:= tl tl cd; cd := cons C cd}}
+}}}}}}}}}}}}}
+};
+out := hd tl tl hd PD;
+count := out;
+copy := store;
+while count{
+	copy := tl copy;
+	count := tl count};
+	result := hd copy
+}write result

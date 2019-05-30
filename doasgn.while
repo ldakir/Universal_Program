@@ -1,0 +1,24 @@
+doasgn
+read X {
+list := nil;
+store := hd X;
+k:= hd tl X;
+val := tl tl X;
+
+while k{
+	list := cons hd store list;
+	store := tl store;
+	k := tl k
+	
+};
+
+store := tl store;
+store := cons val store;
+
+while list {
+	store := cons hd list store;
+	list := tl list
+}
+}
+write store
+	
